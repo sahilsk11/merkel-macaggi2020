@@ -40,7 +40,8 @@ a {
 .landing-wrapper {
   width: 100%;
   display: flex;
-  margin-top: -38px;
+  max-height: calc(100vh - 100px);
+  overflow: hidden;
 }
 
 .col {
@@ -48,10 +49,11 @@ a {
 }
 
 .landing-img {
-  background-image: url("./../img/team.png");
+  background-image: url("./../img/team.jpg");
   height: 100vh;
   background-position: center;
   background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .page-title {
@@ -79,12 +81,14 @@ a {
 .box-container {
   display: block;
   margin: 0px auto;
+  margin: 10px;
   width: 240px;
   height: 60px;
   border: 2px solid #EAEAEA;
   border-radius: 17px;
-  margin-bottom: 10px;
   position: relative;
+  cursor: pointer;
+  min-width: 150px;
 }
 
 .box-img {
@@ -100,4 +104,40 @@ a {
   padding-left: 77px;
   padding-top: 7px;
   font-size: 18px;
+}
+
+.center {
+  margin: 0px auto;
+  display: block;
+  margin-bottom: 30px;
+  padding-left: 0px;
+  text-align: center;
+}
+
+.endorser-title {
+  text-align: center;
+  padding-left: 0px;
+}
+
+hr {
+  border: 2px solid #E7E7E7;
+  margin: 0px;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  text-align: center;
+  font-family: "Hind";
+  font-weight: 500;
+  padding-top: 20px;
+}
+
+.endorsers {
+  display: flex;
+  width: 90%;
+  max-width: 1000px;
+  margin: 0px auto;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin-bottom: 40px;
 }
