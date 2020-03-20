@@ -46,6 +46,7 @@ a {
 
 .col {
   width: 50%;
+  position: relative;
 }
 
 .landing-img {
@@ -56,13 +57,16 @@ a {
   background-size: cover;
 }
 
+.landing-text-wrapper {
+  padding-top: 20%;
+}
+
 .page-title {
   font-family: "Hind";
   text-align: center;
   color: #7E7CF5;
   font-size: 40px;
   margin: 0px;
-  margin-top: 20%;
 }
 
 .subtitle {
@@ -140,4 +144,41 @@ hr {
   flex-wrap: wrap;
   justify-content: space-evenly;
   margin-bottom: 40px;
+}
+
+.col-3 {
+  width: 33%;
+}
+
+.col-9 {
+  width: 66%;
+}
+
+.issue-title {
+  font-family: "Hind";
+  text-align: center;
+  color: #7E7CF5;
+  font-size: 25px;
+}
+
+.issue-content-wrapper {
+  display: flex;
+  margin: 0px auto;
+  width: 70%;
+}
+
+.issue-img {
+  padding-top: 50%;
+  padding-left: 50%;
+  transform: translate(-50%,-50%);
+  width: 70%;
+  max-width: 100px;
+}
+
+.paragraph {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: 400;
+  margin: 0px auto;
+  display: block;
+  color: grey;
 }
