@@ -42,6 +42,21 @@
 			});
 		});
 	</script>
+
+	<script>
+		const baseUrl = "https://api.airtable.com/v0/appcxsXzjy11aWDKP/page-data?api_key=keyjYTQNlzdmReX94";
+		fetch(baseUrl, {
+			method: 'GET',
+			mode: 'no-cors'
+		}).then(response => response.json())
+			.then(data => {
+				console.log("hee");
+				console.log(data)
+		}).catch((error) => {
+			console.log(error);
+		});
+		
+	</script>
 </head>
 
 <body class="landing is-preload">
