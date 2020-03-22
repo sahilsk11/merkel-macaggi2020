@@ -1,3 +1,8 @@
 .issues-icon {
   width: 80px;
 }
+
+.custom-description {
+  text-align: left;
+  margin-bottom: 18px;
+}

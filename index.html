@@ -50,15 +50,34 @@
 			method: 'GET',
 		}).then(response => response.json())
 			.then(data => {
-				data.records.forEach(function(element) {
+				data.records.forEach(function (element) {
 					const key = element.fields.element;
-					const value = element.fields.value.split('\n').join('<br>');
-;
-					console.log(value)
-					document.getElementById(key).innerHTML = value;
+					console.log(key)
+					var value = element.fields.value;
+					if (element.fields.list === true) {
+						value = splitList(value);
+					} else if (value.indexOf("\n") >= 0) {
+						value = value.split('\n').join('<br>');
+					}
+
+					if (document.getElementById(key) == null || document.getElementById(key) == undefined) {
+						console.log(key)
+					} else {
+						document.getElementById(key).innerHTML = value;
+					}
 				})
-		});
-		
+			});
+
+		function splitList(str) {
+			const list = str.split("\n");
+			const firstLine = "<p class='custom-description'>" + list[0] + "</p>";
+			let ul = "";
+			for (var i = 1; i < list.length; i++) {
+				if (list[i] != '')
+					ul += "<li>" + list[i].split('- ').join('') + "</li>";
+			}
+			return firstLine + "<ul>" + ul + "</ul>";
+		}
 	</script>
 </head>
 
@@ -104,12 +123,16 @@
 					<section>
 						<img src="images/empowerment.svg" class="issues-icon">
 						<h3>Empowerment</h3>
-						<p id="issue-one-text"></p>
+						<p id="issue-one-text" class="custom-description">
+							
+						</p>
 					</section>
 					<section>
 						<img src="https://image.flaticon.com/icons/svg/1087/1087840.svg" class="issues-icon">
 						<h3>Innovation</h3>
-						<p id="issue-two-text">Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum
+						<p id="issue-two-text" class="custom-description">Integer volutpat ante et accumsan commophasellus sed
+							aliquam feugiat lorem aliquet ut
+							enim rutrum
 							phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
 					</section>
 				</div>
@@ -117,13 +140,17 @@
 					<section>
 						<img src="images/rights.svg" class="issues-icon">
 						<h3>Student's Rights</h3>
-						<p id="issue-three-text">Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum
+						<p id="issue-three-text" class="custom-description">Integer volutpat ante et accumsan commophasellus sed
+							aliquam feugiat lorem aliquet
+							ut enim rutrum
 							phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
 					</section>
 					<section>
 						<img src="https://image.flaticon.com/icons/svg/365/365240.svg" class="issues-icon">
 						<h3>Sustainable Future</h3>
-						<p id="issue-four-text">Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum
+						<p id="issue-four-text" class="custom-description">Integer volutpat ante et accumsan commophasellus sed
+							aliquam feugiat lorem aliquet
+							ut enim rutrum
 							phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
 					</section>
 				</div>
@@ -135,7 +162,8 @@
 					<section class="box special">
 						<span class="image featured"><img src="images/pic02.jpg" alt="" /></span>
 						<h3 id="card-one-title">Our Story</h3>
-						<p id="card-one-description">Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum
+						<p id="card-one-description">Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem
+							aliquet ut enim rutrum
 							phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
 						<ul class="actions special">
 							<li><a href="#" class="button alt">Learn More</a></li>
@@ -148,7 +176,8 @@
 					<section class="box special">
 						<span class="image featured"><img src="images/pic03.jpg" alt="" /></span>
 						<h3 id="card-two-title">Voting Process</h3>
-						<p id="card-two-description">Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum
+						<p id="card-two-description">Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem
+							aliquet ut enim rutrum
 							phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
 						<ul class="actions special">
 							<li><a href="#" class="button alt">Learn More</a></li>
