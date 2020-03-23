@@ -45,6 +45,15 @@
 	</script>
 
 	<script>
+		let pswd = "";
+		const flag = true;
+		while (flag && pswd !== "carbon" && pswd != null) {
+			console.log(pswd);
+			pswd = prompt("Enter password");
+		}
+		if (pswd == null) {
+			window.close()
+		}
 		const baseUrl = "https://api.airtable.com/v0/appcxsXzjy11aWDKP/page-data?api_key=keyjYTQNlzdmReX94";
 		fetch(baseUrl, {
 			method: 'GET',
@@ -124,7 +133,7 @@
 						<img src="images/empowerment.svg" class="issues-icon">
 						<h3>Empowerment</h3>
 						<p id="issue-one-text" class="custom-description">
-							
+
 						</p>
 					</section>
 					<section>
