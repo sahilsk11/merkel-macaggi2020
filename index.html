@@ -46,37 +46,37 @@
 
 	<script>
 		let pswd = "";
-		const flag = true;
-		while (flag && pswd !== "carbon" && pswd != null) {
-			console.log(pswd);
+		const pswdFlag = false;
+		const dataFlag = true;
+		while (pswdFlag && pswd !== "carbon" && pswd != null) {
 			pswd = prompt("Enter password");
 		}
 		if (pswd == null) {
 			window.close()
 		}
-		const baseUrl = "https://api.airtable.com/v0/appcxsXzjy11aWDKP/page-data?api_key=keyjYTQNlzdmReX94";
-		fetch(baseUrl, {
-			method: 'GET',
-		}).then(response => response.json())
-			.then(data => {
-				data.records.forEach(function (element) {
-					const key = element.fields.element;
-					console.log(key)
-					var value = element.fields.value;
-					if (element.fields.list === true) {
-						value = splitList(value);
-					} else if (value.indexOf("\n") >= 0) {
-						value = value.split('\n').join('<br>');
-					}
+		if (dataFlag) {
+			const baseUrl = "https://api.airtable.com/v0/appcxsXzjy11aWDKP/page-data?api_key=keyjYTQNlzdmReX94";
+			fetch(baseUrl, {
+				method: 'GET',
+			}).then(response => response.json())
+				.then(data => {
+					data.records.forEach(function (element) {
+						const key = element.fields.element;
+						var value = element.fields.value;
+						if (element.fields.list === true) {
+							value = splitList(value);
+						} else if (value.indexOf("\n") >= 0) {
+							value = value.split('\n').join('<br>');
+						}
 
-					if (document.getElementById(key) == null || document.getElementById(key) == undefined) {
-						console.log(key)
-					} else {
-						document.getElementById(key).innerHTML = value;
-					}
-				})
-			});
-
+						if (document.getElementById(key) == null || document.getElementById(key) == undefined) {
+							console.log(key)
+						} else {
+							document.getElementById(key).innerHTML = value;
+						}
+					})
+				});
+		}
 		function splitList(str) {
 			const list = str.split("\n");
 			const firstLine = "<p class='custom-description'>" + list[0] + "</p>";
@@ -86,6 +86,46 @@
 					ul += "<li>" + list[i].split('- ').join('') + "</li>";
 			}
 			return firstLine + "<ul>" + ul + "</ul>";
+		}
+
+		function handleSubmit() {
+			document.getElementById("feedback").innerHTML = "";
+			const value = document.getElementById("input").value;
+			console.log(value)
+			let validEmail = true;
+			if (value.indexOf("@") <= 0 || value.length > 30) {
+				validEmail = false;
+			}
+			if (validEmail) {
+				//document.getElementById("feedback").innerHTML = "You're on the list!";
+				addUser(value);
+			} else {
+				document.getElementById("feedback").innerHTML = "Hm, that doesn't look like a valid email. Try again?";
+			}
+		}
+
+		function addUser(email) {
+			const obj = {
+				records: [
+					{
+						"fields": {
+							"Email": email
+						}
+					}
+				]
+			}
+			const baseUrl = "https://api.airtable.com/v0/appcxsXzjy11aWDKP/signups?api_key=keyjYTQNlzdmReX94";
+			fetch(baseUrl, {
+				method: 'POST',
+				body: JSON.stringify(obj),
+				headers: {
+					'Content-Type': 'application/json'
+					// 'Content-Type': 'application/x-www-form-urlencoded',
+				},
+			}).then(response => response.json())
+				.then(data => {
+					document.getElementById("feedback").innerHTML = "You're on the list!"
+				});
 		}
 	</script>
 </head>
@@ -97,11 +137,11 @@
 		<header id="header" class="alt">
 			<nav id="nav">
 				<ul>
-					<li><a href=".">Home</a></li>
-					<li><a href="#">About</a></li>
-					<li><a href="#">Campaign</a></li>
-					<li><a href="#">Connect</a></li>
-					<li><a href="#" class="button">How To Vote</a></li>
+					<li><a href="#banner">Home</a></li>
+					<li><a href="#content">Campaign</a></li>
+					<li><a href="#story">About</a></li>
+					<li><a href="#cta">Connect</a></li>
+					<li><a href="#vote" class="button">How To Vote</a></li>
 				</ul>
 			</nav>
 		</header>
@@ -111,23 +151,17 @@
 			<h2 id="page-title">Merkel-Macaggi 2020</h2>
 			<p id="page-subtitle">Together. A Stronger Purdue.</p>
 			<ul class="actions special">
-				<li><a href="#content" class="button primary">Learn More</a></li>
+				<li><a href="#content" class="button default">Learn More</a></li>
+				<li><a href="#vote" class="button primary">How to Vote</a></li>
 			</ul>
 		</section>
 
 		<!-- Main -->
 		<section id="main" class="container">
 
-			<section class="box special">
-				<header class="major">
-					<h2 id="section-one-title">Welcome to the future.</h2>
-					<p id="section-one-text">We believe in a strong Purdue, and with your help, we are going to get there.</p>
-				</header>
-				<span class="image featured"><img src="images/pic01.jpg" alt="" /></span>
-			</section>
-
 			<section class="box special features" id="content">
-				<h2 id="section-two-title">On the Issues</h2>
+				<h2 style="margin-bottom: 0px;" id="section-two-title">On the Issues</h2>
+				<h4 style="padding-bottom: 20px;" id="section-two-subtitle">From our experience to your voice</h4>
 				<div class="features-row">
 					<section>
 						<img src="images/empowerment.svg" class="issues-icon">
@@ -165,38 +199,36 @@
 				</div>
 			</section>
 
-			<div class="row">
-				<div class="col-6 col-12-narrower">
+			<section class="box special" id="story">
+				<header class="major">
+					<h2 id="card-one-title">Our Story</h2>
+					<h4 style="padding-bottom: 20px; " id="section-two-subtitle">and why we're right for you</h4>
 
-					<section class="box special">
-						<span class="image featured"><img src="images/pic02.jpg" alt="" /></span>
-						<h3 id="card-one-title">Our Story</h3>
-						<p id="card-one-description">Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem
-							aliquet ut enim rutrum
-							phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
-						<ul class="actions special">
-							<li><a href="#" class="button alt">Learn More</a></li>
-						</ul>
-					</section>
+					<p id="card-one-description" style="width: 80%; margin: 0px auto; font-size: 18px; padding-bottom: 100px;">We
+						believe in a strong
+						Purdue, and with your help, we are going to get there.</p>
+					<span class="image featured" style="width: 100%; max-width: 700px; margin: 0px auto"><img
+							src="images/pic01.jpg" alt="" /></span>
 
-				</div>
-				<div class="col-6 col-12-narrower">
+				</header>
+				<div id="vote"></div>
+			</section>
 
-					<section class="box special">
-						<span class="image featured"><img src="images/pic03.jpg" alt="" /></span>
-						<h3 id="card-two-title">Voting Process</h3>
-						<p id="card-two-description">Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem
-							aliquet ut enim rutrum
-							phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
-						<ul class="actions special">
-							<li><a href="#" class="button alt">Learn More</a></li>
-						</ul>
-					</section>
+			<section class="box special"
+				style="width: 500px; margin: 0px auto; height: 350px; margin-top: 60px; padding-top: 20px;">
+				<header class="major">
+					<h2 style="padding-top: 0px;" id="card-one-title">How to Vote</h2>
+					<p id="card-one-description" style="width: 100%; margin: 0px auto; font-size: 18px; padding-bottom: 100px;">
+						Visit <a href="https://boilerlink.purdue.edu" target="_blank">BoilerLink</a> on March 29th and search
+						"Purdue Student Government Voting." Voting is
+						quick and
+						easy. If you want a reminder, follow us on social media or sign up your email below!</p>
 
-				</div>
-			</div>
-
+				</header>
+			</section>
 		</section>
+
+
 
 		<!-- CTA -->
 		<section id="cta">
@@ -204,16 +236,19 @@
 			<h2 id="section-three-title">Stay in the Loop.</h2>
 			<p id="section-three-subtitle">Sign up for our latest updates and to pledge support!</p>
 
-			<form onSubmit="">
+			<div style="margin: 0 auto; max-width: 100%; width: 25em;" id="form">
 				<div class="row gtr-50 gtr-uniform">
 					<div class="col-8 col-12-mobilep">
-						<input type="email" name="email" id="email" placeholder="Email Address" />
+						<input type="email" name="email" id="input" placeholder="Email Address" />
 					</div>
 					<div class="col-4 col-12-mobilep">
-						<input type="submit" value="Sign Up" class="fit" />
+						<input type="submit" value="Sign Up" class="fit" onClick="handleSubmit()" />
 					</div>
 				</div>
-			</form>
+				<div>
+					<h5 id="feedback" style="margin-top: 30px;"></h5>
+				</div>
+			</div>
 
 		</section>
 
