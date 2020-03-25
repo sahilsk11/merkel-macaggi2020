@@ -10,3 +10,54 @@
 ul {
   padding-left: 10%;
 }
+
+.top-icon {
+  height: 100px;
+  position: absolute;
+  left: 5px;
+  top: 5px;
+}
+
+.custom-col-6 {
+  position: relative;
+  width: 50%;
+  min-width: 250px;
+}
+
+.landing-description {
+  display: block;
+  margin: 0px auto;
+  width: 90%;
+  margin-top: 30%;
+  transform: translateY(-50%);
+}
+
+.small-box {
+  max-width: 500px;
+  margin: 0px auto;
+}
+
+@media only screen and (max-width: 525px) {
+  .small-box {
+    max-width: none;
+    margin: 1em;
+  }
+}
+
+@media only screen and (max-width: 660px) {
+  .custom-col-6 {
+    width: 100%;
+  }
+  .landing-description {
+    margin-top: 5%;
+    transform: translateY(0%);
+  }
+}
+
+@media only screen and (max-width: 840px) {
+  .top-icon {
+    right: 5px;
+    left: auto;
+    height: 10vw;
+  }
+}
